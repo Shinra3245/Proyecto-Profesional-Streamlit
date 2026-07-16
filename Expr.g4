@@ -1,0 +1,123 @@
+grammar Expr;
+
+root : expr EOF;
+
+expr: EOF;
+
+// Reglas Lexicas
+
+// Palabras Rervadas para ambos, Cisco IOS y Huawei VRP
+INTERFACE: [iI][nN][tT][eE][rR][fF][aA][cC][eE];
+IP: [iI][pP];
+IPV6: [iI][pP][vV]'6';
+ADDRESS: [aA][dD][dD][rR][eE][sS][sS];
+OSPF: [oO][sS][pP][fF];
+AREA: [aA][rR][eE][aA];
+NETWORK: [nN][eE][tT][wW][oO][rR][kK];
+VLAN: [vV][lL][aA][nN];
+ACCESS: [aA][cC][cC][eE][sS][sS];
+TRUNK: [tT][rR][uU][nN][kK];
+PERMIT: [pP][eE][rR][mM][iI][tT];
+DENY: [dD][eE][nN][yY];
+DESCRIPTION: [dD][eE][sS][cC][rR][iI][pP][tT][iI][oO][nN];
+LINK_LOCAL: [lL][iI][nN][kK]'-'[lL][oO][cC][aA][lL];
+EUI64: [eE][uU][iI]'-''6''4';
+SHUTDOWN: [sS][hH][uU][tT][dD][oO][wW][nN];
+QUIT: [qQ][uU][iI][tT];
+TCP: [tT][cC][pP];
+UDP: [uU][dD][pP];
+ICMP: [iI][cC][mM][pP];
+SSH: [sS][sS][hH];
+TELNET: [tT][eE][lL][nN][eE][tT];
+HTTPS: [hH][tT][tT][pP][sS];
+
+// Operadores
+IGUAL: [eE][qQ];
+MAYOR_QUE: [gG][tT];
+MENOR_QUE: [lL][tT];
+DIFERENTE: [nN][eE][qQ];
+RANGO: [rR][aA][nN][gG][eE];
+NEGACION: [nN][oO][tT];
+ANY: [aA][nN][yY];
+HOST: [hH][oO][sS][tT];
+
+// Palabras Reservadas de Cisco IOS
+ROUTER: [rR][oO][uU][tT][eE][rR];
+SWITCH_PORT: [sS][wW][iI][tT][cC][hH][pP][oO][rR][tT];
+MODE: [mM][oO][dD][eE];
+ALLOWED: [aA][lL][lL][oO][wW][eE][dD];
+ENCAPSULATION: [eE][nN][cC][aA][pP][sS][uU][lL][aA][tT][iI][oO][nN];
+NATIVE: [nN][aA][tT][iI][vV][eE];
+NO: [nN][oO];
+CONFIGURE: [cC][oO][nN][fF][iI][gG][uU][rR][eE];
+TERMINAL: [tT][eE][rR][mM][iI][nN][aA][lL];
+CONF: [cC][oO][nN][fF];
+HOSTNAME: [hH][oO][sS][tT][nN][aA][mM][eE];
+ROUTE: [rR][oO][uU][tT][eE];
+SHOW: [sS][hH][oO][wW];
+RUNNING_CONFIG: [rR][uU][nN][nN][iI][nN][gG]'-'[cC][oO][nN][fF][iI][gG];
+ACCESS_LIST: [aA][cC][cC][eE][sS][sS]'-'[lL][iI][sS][tT];
+ACCESS_GROUP: [aA][cC][cC][eE][sS][sS]'-'[gG][rR][oO][uU][pP];
+LINE: [lL][iI][nN][eE];
+VTY: [vV][tT][yY];
+TRANSPORT: [tT][rR][aA][nN][sS][pP][oO][rR][tT];
+INPUT: [iI][nN][pP][uU][tT];
+LOGIN: [lL][oO][gG][iI][nN];
+USERNAME: [uU][sS][eE][rR][nN][aA][mM][eE];
+PASSWORD: [pP][aA][sS][sS][wW][oO][rR][dD];
+SECRET: [sS][eE][cC][rR][eE][tT];
+ENABLE: [eE][nN][aA][bB][lL][eE];
+PRIVILEGE: [pP][rR][iI][vV][iI][lL][eE][gG][eE];
+AAA: [aA][aA][aA];
+CRYPTO: [cC][rR][yY][pP][tT][oO];
+KEY: [kK][eE][yY];
+GENERATE: [gG][eE][nN][eE][rR][aA][tT][eE];
+RSA: [rR][sS][aA];
+
+// Palabras Reservadas de Huawei VRP
+PORT: [pP][oO][rR][tT];
+LINK_TYPE: [lL][iI][nN][kK]'-'[tT][yY][pP][eE];
+ALLOW_PASS: [aA][lL][lL][oO][wW]'-'[pP][aA][sS][sS];
+DOT1Q: [dD][oO][tT]'1'[qQ];
+TERMINATION: [tT][eE][rR][mM][iI][nN][aA][tT][iI][oO][nN];
+VID: [vV][iI][dD];
+UNDO: [uU][nN][dD][oO];
+SYSTEM_VIEW: [sS][yY][sS][tT][eE][mM]'-'[vV][iI][eE][wW];
+SYSNAME: [sS][yY][sS][nN][aA][mM][eE];
+ROUTE_STATIC: [rR][oO][uU][tT][eE]'-'[sS][tT][aA][tT][iI][cC];
+DISPLAY: [dD][iI][sS][pP][lL][aA][yY];
+CURRENT_CONFIGURATION: [cC][uU][rR][rR][eE][nN][tT]'-'[cC][oO][nN][fF][iI][gG][uU][rR][aA][tT][iI][oO][nN];
+ACL: [aA][cC][lL];
+TRAFFIC_FILTER: [tT][rR][aA][fF][fF][iI][cC]'-'[fF][iI][lL][tT][eE][rR];
+INBOUND: [iI][nN][bB][oO][uU][nN][dD];
+OUTBOUND: [oO][uU][tT][bB][oO][uU][nN][dD];
+RULE: [rR][uU][lL][eE];
+
+// Demas reglas lexicas generales
+
+// Identificadores
+ID: [a-zA-Z] [a-zA-Z0-9_-]* ('/' [0-9]+)* ('.' [0-9]+)?;
+
+// Direcciones IP
+DIRECCION_IPV4: [0-9]+ '.' [0-9]+ '.' [0-9]+ '.' [0-9]+;
+DIRECCION_IPV6: [0-9a-fA-F]+ (':' [0-9a-fA-F]*)+ ('/' [0-9]+)?;
+
+// Numeros
+NUMERO: [0-9]+;
+
+// Cadenas de texto
+CADENA: '"' ~["\r\n]* '"';
+
+// Delimitadores
+DIAGONAL: '/';
+PUNTO: '.';
+COMA: ',';
+GUION: '-';
+PARENTESIS_IZQ: '(';
+PARENTESIS_DER: ')';
+
+// Comentarios
+COMENTARIO: ('!' | '#') ~[\r\n]* -> skip;
+
+// Espacios en blanco
+WS: [ \t\r\n]+ -> skip;
