@@ -252,7 +252,7 @@ PARENTESIS_IZQ: '(';
 PARENTESIS_DER: ')';
 
 // Comentarios
-COMENTARIO: ('!' | '#') ~[\r\n]* -> skip;
+COMENTARIO: ('!' | '#') ~[\r\n]* -> channel(HIDDEN);
 
 // Espacios en blanco
-WS: [ \t\r\n]+ -> skip;
+WS: [ \t\r\n]+ -> channel(HIDDEN);

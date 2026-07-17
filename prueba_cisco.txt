@@ -1,0 +1,32 @@
+configure terminal
+hostname RouterTest
+
+vlan 10
+vlan 20
+
+access-list 100 permit tcp any any eq 80
+
+interface GigabitEthernet0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+
+interface GigabitEthernet0/1
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+
+interface GigabitEthernet0/1.10
+encapsulation dot1Q 10 native
+
+interface GigabitEthernet0/1.20
+encapsulation dot1Q 20
+
+interface GigabitEthernet0/2
+switchport mode access
+switchport access vlan 10
+
+interface GigabitEthernet0/3
+switchport mode trunk
+switchport trunk allowed vlan 10,20
+
+interface GigabitEthernet0/4
+ip access-group 100 in
