@@ -29,8 +29,29 @@ class Archivo:
         # Retornamos True si la extension esta dentro de las validas
         return self.obtener_extension() in self.EXTENSIONES_VALIDAS
 
+    # Metodo para validar que el contenido sea realmente de red
+    def es_contenido_valido(self):
+        contenido = self.leer().lower()
+        
+        # Palabras o frases muy especificas de una configuracion
+        palabras_clave = [
+            "interface ", "vlan ", "configure terminal", "system-view",
+            "sysname ", "ospf ", "ip address ", "shutdown", "router ospf", "access-list"
+        ]
+        
+        encontradas = 0
+        for palabra in palabras_clave:
+            if palabra in contenido:
+                encontradas += 1
+                
+        # Si tiene al menos 2 terminos de red muy comunes, lo damos por bueno
+        return encontradas >= 2
+
     # Metodo para leer el contenido del archivo
     def leer(self):
+
+        # Regresamos el puntero al inicio por si ya se habia leido antes
+        self.archivo_subido.seek(0)
 
         # Leemos el archivo como bytes
         contenido_bytes = self.archivo_subido.read()
