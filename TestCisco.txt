@@ -1,6 +1,5 @@
 ! Ejemplo de configuracion Cisco IOS
 configure terminal
-conf t
 !
 hostname Router1
 ip domain-name lab.local
@@ -11,34 +10,38 @@ enable secret cisco123
 !
 crypto key generate rsa
 2048
+crypto pki trustpoint MiCertificadoSuperSegur0
 !
 line vty 0 4
- transport input ssh telnet
- login local
- password cisco123
+transport input ssh telnet
+login local
+password cisco123
+!
+logging host 192.168.1.100
 !
 interface GigabitEthernet0/0
- description Enlace_Principal
- ip address 192.168.10.1 255.255.255.0
- no shutdown
+description Enlace_Principal
+ip address 192.168.10.1 255.255.255.0
+no shutdown
 !
 interface GigabitEthernet0/1.10
- description "Subinterfaz VLAN 10"
- encapsulation dot1Q 10 native
+description "Subinterfaz VLAN 10"
+encapsulation dot1Q 10 native
 !
 interface range GigabitEthernet0/1-5
- switchport mode access
+switchport mode access
+switchport access vlan 10
 !
 interface GigabitEthernet0/2
- switchport mode trunk
- switchport trunk allowed vlan 10,20,30
+switchport mode trunk
+switchport trunk allowed vlan 10,20,30
 !
 ipv6 address 2001:DB8::1/64
 ipv6 address FE80::1 link-local
 !
 router ospf 1
- network 192.168.10.0 0.0.0.255 area 0
- network 192.168.30.0/24 area 0
+network 192.168.10.0 0.0.0.255 area 0
+network 192.168.30.0/24 area 0
 !
 ip route 192.168.20.0 255.255.255.0 192.168.10.254
 !
@@ -51,6 +54,8 @@ access-list 110 permit tcp any any lt 1024
 access-list 110 deny tcp any any neq 23
 !
 interface GigabitEthernet0/0
- ip access-group 110 in
+ip access-group 110 in
+!
+ping 192.168.10.1
 !
 show running-config

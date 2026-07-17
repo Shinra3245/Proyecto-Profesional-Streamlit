@@ -47,6 +47,13 @@ linea_configuracion
     | regla_traffic_filter
     | regla_display_current_configuration
     | regla_sysname
+    | regla_switchport_access_vlan
+    | regla_port_default_vlan
+    | regla_ping
+    | regla_crypto_pki_trustpoint
+    | regla_pki_entity
+    | regla_logging_host
+    | regla_info_center_loghost
     ;
 
 regla_configure_terminal: CONFIGURE TERMINAL;
@@ -80,10 +87,20 @@ regla_dot1q_termination: DOT1Q TERMINATION VID NUMERO;
 
 regla_switchport_mode: SWITCH_PORT MODE (ACCESS | TRUNK);
 regla_switchport_trunk_allowed: SWITCH_PORT TRUNK ALLOWED VLAN regla_vlan_list;
+regla_switchport_access_vlan: SWITCH_PORT ACCESS VLAN NUMERO;
 regla_port_link_type: PORT LINK_TYPE (ACCESS | TRUNK);
 regla_port_trunk_allow_pass: PORT TRUNK ALLOW_PASS VLAN regla_vlan_list;
+regla_port_default_vlan: PORT DEFAULT VLAN NUMERO;
 regla_vlan_list: NUMERO (COMA NUMERO)*;
 regla_vlan: VLAN NUMERO;
+
+regla_ping: PING DIRECCION_IPV4;
+
+regla_crypto_pki_trustpoint: CRYPTO PKI TRUSTPOINT ID;
+regla_pki_entity: PKI ENTITY ID;
+
+regla_logging_host: LOGGING HOST DIRECCION_IPV4;
+regla_info_center_loghost: INFO_CENTER LOGHOST DIRECCION_IPV4;
 
 regla_ipv6_address: IPV6 ADDRESS DIRECCION_IPV6 LINK_LOCAL?;
 regla_ipv6_address_eui64: IPV6 ADDRESS ID EUI64;
@@ -140,6 +157,8 @@ ICMP: [iI][cC][mM][pP];
 SSH: [sS][sS][hH];
 TELNET: [tT][eE][lL][nN][eE][tT];
 HTTPS: [hH][tT][tT][pP][sS];
+PING: [pP][iI][nN][gG];
+PKI: [pP][kK][iI];
 
 // Operadores
 IGUAL: [eE][qQ];
@@ -183,6 +202,8 @@ CRYPTO: [cC][rR][yY][pP][tT][oO];
 KEY: [kK][eE][yY];
 GENERATE: [gG][eE][nN][eE][rR][aA][tT][eE];
 RSA: [rR][sS][aA];
+TRUSTPOINT: [tT][rR][uU][sS][tT][pP][oO][iI][nN][tT];
+LOGGING: [lL][oO][gG][gG][iI][nN][gG];
 
 // Palabras Reservadas de Huawei VRP
 PORT: [pP][oO][rR][tT];
@@ -202,6 +223,10 @@ TRAFFIC_FILTER: [tT][rR][aA][fF][fF][iI][cC]'-'[fF][iI][lL][tT][eE][rR];
 INBOUND: [iI][nN][bB][oO][uU][nN][dD];
 OUTBOUND: [oO][uU][tT][bB][oO][uU][nN][dD];
 RULE: [rR][uU][lL][eE];
+DEFAULT: [dD][eE][fF][aA][uU][lL][tT];
+ENTITY: [eE][nN][tT][iI][tT][yY];
+INFO_CENTER: [iI][nN][fF][oO]'-'[cC][eE][nN][tT][eE][rR];
+LOGHOST: [lL][oO][gG][hH][oO][sS][tT];
 
 // Demas reglas lexicas generales
 
