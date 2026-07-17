@@ -35,27 +35,27 @@ pip install -r requirements.txt
 
 ## Generar el analizador
 
-Los archivos `ExprLexer.py`, `ExprParser.py` y `ExprListener.py` no estan en
-el repositorio porque los genera ANTLR a partir de la gramatica `Expr.g4`.
-Hay que generarlos despues de clonar el proyecto y cada vez que se modifique
-la gramatica.
+Los archivos `ExprLexer.py`, `ExprParser.py`, `ExprListener.py` y
+`ExprVisitor.py` no estan en el repositorio porque los genera ANTLR a partir
+de la gramatica `Expr.g4`. Hay que generarlos despues de clonar el proyecto y
+cada vez que se modifique la gramatica.
 
 En Linux y macOS, indicando la ruta del archivo .jar:
 
 ```
-java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 Expr.g4
+java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 -visitor Expr.g4
 ```
 
 En Windows (PowerShell), con ANTLR configurado en la variable de entorno
 CLASSPATH:
 
 ```
-java -jar $env:CLASSPATH -Dlanguage=Python3 .\Expr.g4
+java -jar $env:CLASSPATH -Dlanguage=Python3 -visitor .\Expr.g4
 ```
 
-No usar la bandera `-no-listener`. Esa bandera evita que ANTLR genere el
-archivo `ExprListener.py`, que es la clase base que necesita el analizador
-semantico.
+La bandera `-visitor` es obligatoria: sin ella ANTLR no genera el archivo
+`ExprVisitor.py`, que es la clase base que necesita el analizador semantico, y
+la aplicacion no arranca. Tampoco usar la bandera `-no-listener`.
 
 ## Ejecutar
 
