@@ -1,8 +1,118 @@
 grammar Expr;
 
-root : expr EOF;
+// Reglas Sintacticas
+archivo_configuracion: linea_configuracion+ EOF;
 
-expr: EOF;
+linea_configuracion
+    : regla_configure_terminal
+    | regla_conf
+    | regla_hostname
+    | regla_domain_name
+    | regla_aaa
+    | regla_username
+    | regla_enable_secret
+    | regla_crypto_key
+    | regla_line_vty
+    | regla_transport_input
+    | regla_login
+    | regla_password
+    | regla_interface_range
+    | regla_interface
+    | regla_description
+    | regla_ip_address
+    | regla_no_shutdown
+    | regla_undo_shutdown
+    | regla_encapsulation
+    | regla_switchport_trunk_allowed
+    | regla_switchport_mode
+    | regla_ipv6_address_eui64
+    | regla_ipv6_address
+    | regla_router_ospf
+    | regla_network
+    | regla_ip_route
+    | regla_ip_route_static
+    | regla_access_list
+    | regla_access_group
+    | regla_show_running_config
+    | regla_system_view
+    | regla_port_trunk_allow_pass
+    | regla_port_link_type
+    | regla_dot1q_termination
+    | regla_vlan
+    | regla_quit
+    | regla_ospf
+    | regla_area
+    | regla_acl
+    | regla_acl_rule
+    | regla_traffic_filter
+    | regla_display_current_configuration
+    | regla_sysname
+    ;
+
+regla_configure_terminal: CONFIGURE TERMINAL;
+regla_conf: CONF ID;
+
+regla_hostname: HOSTNAME ID;
+regla_domain_name: IP ID ID PUNTO ID;
+regla_sysname: SYSNAME ID;
+
+regla_aaa: AAA ID;
+regla_username: USERNAME ID PRIVILEGE NUMERO SECRET ID;
+regla_enable_secret: ENABLE SECRET ID;
+regla_crypto_key: CRYPTO KEY GENERATE RSA NUMERO?;
+
+regla_line_vty: LINE VTY NUMERO NUMERO;
+regla_transport_input: TRANSPORT INPUT SSH TELNET;
+regla_login: LOGIN ID;
+regla_password: PASSWORD ID;
+
+regla_interface: INTERFACE ID;
+regla_interface_range: INTERFACE RANGO ID GUION NUMERO;
+
+regla_description: DESCRIPTION (ID | CADENA);
+
+regla_ip_address: IP ADDRESS DIRECCION_IPV4 DIRECCION_IPV4;
+regla_no_shutdown: NO SHUTDOWN;
+regla_undo_shutdown: UNDO SHUTDOWN;
+
+regla_encapsulation: ENCAPSULATION DOT1Q NUMERO NATIVE?;
+regla_dot1q_termination: DOT1Q TERMINATION VID NUMERO;
+
+regla_switchport_mode: SWITCH_PORT MODE (ACCESS | TRUNK);
+regla_switchport_trunk_allowed: SWITCH_PORT TRUNK ALLOWED VLAN regla_vlan_list;
+regla_port_link_type: PORT LINK_TYPE (ACCESS | TRUNK);
+regla_port_trunk_allow_pass: PORT TRUNK ALLOW_PASS VLAN regla_vlan_list;
+regla_vlan_list: NUMERO (COMA NUMERO)*;
+regla_vlan: VLAN NUMERO;
+
+regla_ipv6_address: IPV6 ADDRESS DIRECCION_IPV6 LINK_LOCAL?;
+regla_ipv6_address_eui64: IPV6 ADDRESS ID EUI64;
+
+regla_router_ospf: ROUTER OSPF NUMERO;
+regla_ospf: OSPF NUMERO;
+regla_area: AREA DIRECCION_IPV4;
+regla_network: NETWORK DIRECCION_IPV4 (DIRECCION_IPV4 | DIAGONAL NUMERO) (AREA NUMERO)?;
+
+regla_ip_route: IP ROUTE DIRECCION_IPV4 DIRECCION_IPV4 DIRECCION_IPV4;
+regla_ip_route_static: IP ROUTE_STATIC DIRECCION_IPV4 DIRECCION_IPV4 DIRECCION_IPV4;
+
+regla_access_list: ACCESS_LIST NUMERO (PERMIT | DENY) (TCP | UDP | ICMP) regla_endpoint regla_endpoint regla_port_operator?;
+regla_access_group: IP ACCESS_GROUP NUMERO ID;
+regla_port_operator
+    : (IGUAL | MAYOR_QUE | MENOR_QUE | DIFERENTE) (NUMERO | HTTPS)
+    | RANGO NUMERO NUMERO
+    ;
+
+regla_acl: ACL NUMERO;
+regla_acl_rule: RULE NUMERO (PERMIT | DENY) (IP | TCP | UDP | ICMP) ID regla_endpoint ID ANY regla_port_qualifier?;
+regla_endpoint: ANY | HOST DIRECCION_IPV4 | DIRECCION_IPV4 NUMERO?;
+regla_port_qualifier: PORT NEGACION? (IGUAL | MAYOR_QUE | MENOR_QUE | DIFERENTE) NUMERO;
+regla_traffic_filter: TRAFFIC_FILTER (INBOUND | OUTBOUND) ACL NUMERO;
+
+regla_show_running_config: SHOW RUNNING_CONFIG;
+regla_display_current_configuration: DISPLAY CURRENT_CONFIGURATION;
+regla_system_view: SYSTEM_VIEW;
+regla_quit: QUIT;
 
 // Reglas Lexicas
 
