@@ -3,6 +3,7 @@ from archivo import Archivo
 from analizador_lexico import AnalizadorLexico
 from analizador_sintactico import AnalizadorSintactico
 from helper_sintactico import HelperSintactico
+from analizador_semantico import AnalizadorSemantico
 
 
 class App:
@@ -30,6 +31,10 @@ class App:
 
         if not archivo.es_extension_valida():
             st.error("El archivo debe ser .txt o .cfg")
+            return
+
+        if not archivo.es_contenido_valido():
+            st.error("El archivo no parece ser una configuración de red válida")
             return
 
         codigo = archivo.leer()
@@ -76,6 +81,18 @@ class App:
             st.success("No hay errores sintacticos")
         else:
             st.dataframe(errores_sintacticos, use_container_width=True)
+
+        # Analisis Semantico
+        if len(errores) == 0 and len(errores_sintacticos) == 0:
+            analizador_semantico = AnalizadorSemantico()
+            analizador_semantico.visit(self.analizador_sintactico.arbol)
+            errores_semanticos = analizador_semantico.obtener_errores()
+
+            st.subheader("Errores semánticos")
+            if len(errores_semanticos) == 0:
+                st.success("No hay contradicciones lógicas en la configuración")
+            else:
+                st.dataframe(errores_semanticos, use_container_width=True)
 
 
 if __name__ == "__main__":
