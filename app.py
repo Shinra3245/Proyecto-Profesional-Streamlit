@@ -4,6 +4,7 @@ from analizador_lexico import AnalizadorLexico
 from analizador_sintactico import AnalizadorSintactico
 from helper_sintactico import HelperSintactico
 from analizador_semantico import AnalizadorSemantico
+from traductor import Traductor
 
 
 class App:
@@ -88,9 +89,23 @@ class App:
             analizador_semantico.visit(self.analizador_sintactico.arbol)
             errores_semanticos = analizador_semantico.obtener_errores()
 
-            st.subheader("Errores semánticos")
+            st.subheader("Errores semanticos")
             if len(errores_semanticos) == 0:
-                st.success("No hay contradicciones lógicas en la configuración")
+                st.success("No hay contradicciones logicas en la configuracion")
+                
+                st.subheader("Traductor")
+                st.write("Elige a que lenguaje quieres traducir:")
+                modo_traduccion = st.selectbox(
+                    "Opciones:", 
+                    ["HUAWEI_A_CISCO", "CISCO_A_HUAWEI"]
+                )
+                
+                if st.button("Traducir"):
+                    traductor = Traductor(self.analizador.tokens, modo_traduccion)
+                    codigo_traducido = traductor.traducir(self.analizador_sintactico.arbol)
+                    st.success("Traduccion exitosa")
+                    st.code(codigo_traducido, language="text")
+                    
             else:
                 st.dataframe(errores_semanticos, use_container_width=True)
 

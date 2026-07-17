@@ -1,0 +1,21 @@
+system-view
+sysname RouterTest
+vlan 10
+vlan 20
+acl 3001
+interface GigabitEthernet0/0/0
+ip address 192.168.1.1 255.255.255.0
+undo shutdown
+interface GigabitEthernet0/0/1
+ip address 10.0.0.1 255.255.255.0
+undo shutdown
+port link-type access
+port default vlan 10
+interface GigabitEthernet0/0/2
+undo shutdown
+port link-type trunk
+port trunk allow-pass vlan 10,20
+interface GigabitEthernet0/0/1.10
+dot1q termination vid 10
+interface GigabitEthernet0/0/3
+traffic-filter inbound acl 3001
