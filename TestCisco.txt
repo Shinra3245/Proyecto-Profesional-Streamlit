@@ -1,5 +1,6 @@
 ! Ejemplo de configuracion Cisco IOS
 configure terminal
+conf t
 !
 hostname Router1
 ip domain-name lab.local
